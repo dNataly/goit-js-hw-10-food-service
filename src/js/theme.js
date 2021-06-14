@@ -5,26 +5,26 @@ const Theme = {
   DARK: 'dark-theme',
 };
 
-if (localStorage.getItem('theme') === undefined) {
-  localStorage.setItem('theme', Theme.LIGHT);
+themeToggleBtn.addEventListener('change', toggleThemeMode);
+
+function toggleThemeMode() {
+  if (themeToggleBtn.checked) {
+    localStorage.setItem('theme', Theme.DARK);
+    document.body.classList.remove(Theme.LIGHT);
+    document.body.classList.add(Theme.DARK);
+  } else {
+    localStorage.setItem('theme', Theme.LIGHT);
+    document.body.classList.remove(Theme.DARK);
+    document.body.classList.add(Theme.LIGHT);
+  }
 }
 
 function setTheme() {
-  document.body.classList.remove(Theme.DARK);
-  document.body.classList.remove(Theme.LIGHT);
-  document.body.classList.add(localStorage.getItem('theme'));
+  if (localStorage.getItem('theme') === Theme.DARK) {
+    document.body.classList.add(Theme.DARK);
+    themeToggleBtn.checked = true;
+  } else {
+    document.body.classList.add(Theme.LIGHT);
+  }
 }
-
-themeToggleBtn.addEventListener('change', function () {
-  localStorage.setItem(
-    'theme',
-    localStorage.getItem('theme') === Theme.DARK ? Theme.LIGHT : Theme.DARK,
-  );
-  setTheme();
-});
-
 setTheme();
-
-if (localStorage.getItem('theme') === Theme.DARK) {
-  themeToggleBtn.checked = true;
-}
